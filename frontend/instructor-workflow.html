@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Instructor Workflow: Create Jigsaw & Quiz</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+            }
+            .form-section {
+                @apply bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-200 mb-8;
+            }
+            .form-label {
+                @apply block text-sm font-medium text-slate-700 mb-1;
+            }
+            .form-input {
+                @apply block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+                   focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500;
+            }
+            .add-btn {
+                @apply mt-2 px-4 py-2 bg-sky-600 text-white text-sm font-semibold rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500;
+            }
+            .remove-btn {
+                @apply ml-2 px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full hover:bg-red-200;
+            }
+        </style>
+    </head>
+    <body class="bg-slate-50">
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold text-slate-800 mb-2">
+                Instructor Creation Workflow
+            </h1>
+            <p class="text-slate-600 mb-8">
+                Use this page to create a new Jigsaw Activity and its associated Quiz.
+            </p>
+
+            <!-- Main Form -->
+            <form id="main-form">
+                <!-- Task 2.1: Activity Details Section -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-4">
+                        Part 1: Jigsaw Activity Details
+                    </h2>
+                    <div>
+                        <label for="activity-title" class="form-label"
+                            >Activity Title</label
+                        >
+                        <input
+                            type="text"
+                            id="activity-title"
+                            name="activity-title"
+                            class="form-input"
+                            placeholder="e.g., Introduction to Clustering Algorithms"
+                            required
+                        />
+                    </div>
+                    <div class="mt-4">
+                        <label for="activity-instructions" class="form-label"
+                            >Instructions</label
+                        >
+                        <textarea
+                            id="activity-instructions"
+                            name="activity-instructions"
+                            rows="4"
+                            class="form-input"
+                            placeholder="Provide clear instructions for the students."
+                        ></textarea>
+                    </div>
+                    <div class="mt-4">
+                        <label for="activity-resource-url" class="form-label"
+                            >Central Resource URL (Optional)</label
+                        >
+                        <input
+                            type="url"
+                            id="activity-resource-url"
+                            name="activity-resource-url"
+                            class="form-input"
+                            placeholder="e.g., https://example.com/reading.pdf"
+                        />
+                    </div>
+                </div>
+
+                <!-- Task 2.3: Learning Objectives Section -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-4">
+                        Part 2: Learning Objectives
+                    </h2>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Define the key skills or concepts this activity will assess. These
+                        will be used to tag quiz questions later.
+                    </p>
+                    <div id="learning-objectives-container">
+                        <!-- JS will populate this -->
+                    </div>
+                    <button type="button" id="add-lo-btn" class="add-btn">
+                        Add Learning Objective
+                    </button>
+                </div>
+
+                <!-- Task 2.2: Expert Topics Section -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-4">
+                        Part 3: Expert Topics
+                    </h2>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Create a topic for each "expert group". Students will focus on this
+                        material before teaching it to their Jigsaw peers.
+                    </p>
+                    <div id="expert-topics-container">
+                        <!-- JS will populate this -->
+                    </div>
+                    <button type="button" id="add-topic-btn" class="add-btn">
+                        Add Expert Topic
+                    </button>
+                </div>
+
+                <!-- Task 2.4 & 2.5: Quiz Creation Section -->
+                <div class="form-section">
+                    <h2 class="text-xl font-semibold text-slate-700 border-b pb-2 mb-4">
+                        Part 4: Create Associated Quiz
+                    </h2>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Add questions to assess student understanding after the activity.
+                        Link each question to a Learning Objective you defined above.
+                    </p>
+                    <div id="quiz-questions-container">
+                        <!-- JS will populate this -->
+                    </div>
+                    <button type="button" id="add-question-btn" class="add-btn">
+                        Add Question
+                    </button>
+                </div>
+
+                <!-- Task 2.6: Submission Section -->
+                <div class="mt-8 text-center">
+                    <button
+                        type="submit"
+                        id="submit-btn"
+                        class="w-full md:w-1/2 px-6 py-3 bg-green-600 text-white text-lg font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    >
+                        Save Activity & Quiz
+                    </button>
+                    <div id="feedback-message" class="mt-4 text-sm font-medium"></div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // --- API Configuration ---
+                // IMPORTANT: Replace this placeholder with your actual Digital Ocean server URL
+                const BACKEND_URL = 'https://your-digital-ocean-ip-or-domain.com';
+
+                const loContainer = document.getElementById(
+                    "learning-objectives-container"
+                );
+                const addLoBtn = document.getElementById("add-lo-btn");
+
+                const topicsContainer = document.getElementById(
+                    "expert-topics-container"
+                );
+                const addTopicBtn = document.getElementById("add-topic-btn");
+
+                const questionsContainer = document.getElementById(
+                    "quiz-questions-container"
+                );
+                const addQuestionBtn = document.getElementById("add-question-btn");
+
+                const mainForm = document.getElementById("main-form");
+                const feedbackMessage = document.getElementById("feedback-message");
+
+                let loCounter = 0;
+                let topicCounter = 0;
+                let questionCounter = 0;
+
+                // --- Learning Objectives Logic (Task 2.3) ---
+                addLoBtn.addEventListener("click", () => {
+                    loCounter++;
+                    const loId = `lo-${loCounter}`;
+                    const div = document.createElement("div");
+                    div.className = "flex items-center mb-2";
+                    div.innerHTML = `
+                    <input type="text" name="${loId}" class="form-input flex-grow" placeholder="e.g., Understand K-Means Clustering" required>
+                    <button type="button" class="remove-btn">Remove</button>
+                `;
+                    loContainer.appendChild(div);
+                    div
+                        .querySelector(".remove-btn")
+                        .addEventListener("click", () => div.remove());
+                    updateQuizQuestionDropdowns();
+                });
+
+                // --- Expert Topics Logic (Task 2.2) ---
+                addTopicBtn.addEventListener("click", () => {
+                    topicCounter++;
+                    const div = document.createElement("div");
+                    div.className = "bg-slate-50 p-4 rounded-lg border mb-4";
+                    div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="form-label !mb-0">Expert Topic #${topicCounter}</label>
+                        <button type="button" class="remove-btn">Remove Topic</button>
+                    </div>
+                    <input type="text" name="topic-title-${topicCounter}" class="form-input mb-2" placeholder="Topic Title" required>
+                    <textarea name="topic-questions-${topicCounter}" class="form-input" rows="3" placeholder="Questions or tasks for this expert group." required></textarea>
+                `;
+                    topicsContainer.appendChild(div);
+                    div
+                        .querySelector(".remove-btn")
+                        .addEventListener("click", () => div.remove());
+                });
+
+                // --- Quiz Questions Logic (Task 2.4 & 2.5) ---
+                addQuestionBtn.addEventListener("click", () => {
+                    questionCounter++;
+                    const div = document.createElement("div");
+                    div.className = "bg-slate-50 p-4 rounded-lg border mb-4";
+                    div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="form-label !mb-0">Question #${questionCounter}</label>
+                        <button type="button" class="remove-btn">Remove Question</button>
+                    </div>
+                    <textarea name="question-text-${questionCounter}" class="form-input mb-2" placeholder="Question Text" required></textarea>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                        ${[...Array(4)]
+                                                    .map(
+                                                        (_, i) => `
+                        <div class="flex items-center">
+                            <input type="radio" name="correct-option-${questionCounter}" value="${i}" class="h-4 w-4 text-sky-600 border-slate-300 focus:ring-sky-500" required>
+                            <input type="text" name="option-${questionCounter}-${i}" class="form-input ml-2" placeholder="Option ${
+                                                            i + 1
+                                                        }" required>
+                        </div>
+                        `
+                                                    )
+                                                    .join("")}
+                    </div>
+                    <div>
+                        <label class="form-label">Link to Learning Objective</label>
+                        <select name="question-lo-${questionCounter}" class="form-input question-lo-select" required>
+                            <option value="">Select an objective...</option>
+                        </select>
+                    </div>
+                `;
+                    questionsContainer.appendChild(div);
+                    div
+                        .querySelector(".remove-btn")
+                        .addEventListener("click", () => div.remove());
+                    updateQuizQuestionDropdowns();
+                });
+
+                // Function to update all quiz question dropdowns with current LOs
+                function updateQuizQuestionDropdowns() {
+                    const objectives = Array.from(loContainer.querySelectorAll("input"))
+                        .map((input) => input.value.trim())
+                        .filter((value) => value);
+
+                    const allSelects = document.querySelectorAll(".question-lo-select");
+                    allSelects.forEach((select) => {
+                        const currentVal = select.value;
+                        // Clear existing options except the first placeholder
+                        while (select.options.length > 1) {
+                            select.remove(1);
+                        }
+                        // Add new options
+                        objectives.forEach((obj) => {
+                            const option = new Option(obj, obj);
+                            select.add(option);
+                        });
+                        // Try to restore previous selection
+                        select.value = objectives.includes(currentVal) ? currentVal : "";
+                    });
+                }
+
+                // --- Form Submission Logic (Task 2.6) ---
+                mainForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    feedbackMessage.textContent = "Submitting...";
+                    feedbackMessage.className = "mt-4 text-sm font-medium text-blue-600";
+
+                    const formData = new FormData(mainForm);
+
+                    // Construct activity payload
+                    const activityPayload = {
+                        title: formData.get("activity-title"),
+                        instructions: formData.get("activity-instructions"),
+                        central_resource_url: formData.get("activity-resource-url"),
+                        learning_objectives: [],
+                        expert_topics: [],
+                    };
+
+                    const objectivesMap = new Map(); // Store LO text to use for quiz payload
+
+                    for (let i = 1; i <= loCounter; i++) {
+                        const loText = formData.get(`lo-${i}`);
+                        if (loText) {
+                            activityPayload.learning_objectives.push({ description: loText });
+                            objectivesMap.set(loText, `temp_lo_id_${i}`); // Placeholder for linking
+                        }
+                    }
+
+                    for (let i = 1; i <= topicCounter; i++) {
+                        if (formData.has(`topic-title-${i}`)) {
+                            activityPayload.expert_topics.push({
+                                title: formData.get(`topic-title-${i}`),
+                                questions: formData.get(`topic-questions-${i}`),
+                            });
+                        }
+                    }
+
+                    // Construct quiz payload
+                    const quizPayload = {
+                        title: `${activityPayload.title} Quiz`,
+                        questions: [],
+                    };
+
+                    for (let i = 1; i <= questionCounter; i++) {
+                        if (formData.has(`question-text-${i}`)) {
+                            const options = [...Array(4)].map((_, j) =>
+                                formData.get(`option-${i}-${j}`)
+                            );
+                            const loText = formData.get(`question-lo-${i}`);
+
+                            quizPayload.questions.push({
+                                text: formData.get(`question-text-${i}`),
+                                options: JSON.stringify(options),
+                                correct_option_index: parseInt(
+                                    formData.get(`correct-option-${i}`),
+                                    10
+                                ),
+                                learning_objective_id: objectivesMap.get(loText), // Use placeholder
+                            });
+                        }
+                    }
+
+                    console.log(
+                        "Activity Payload:",
+                        JSON.stringify(activityPayload, null, 2)
+                    );
+                    console.log("Quiz Payload:", JSON.stringify(quizPayload, null, 2));
+
+                    try {
+                        // In a real app, you would post activityPayload, get back the real IDs,
+                        // then update quizPayload with real IDs before posting it.
+                        // For this placeholder, we'll just "send" them.
+
+                        const activityResponse = await fetch(`${BACKEND_URL}/api/activities`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(activityPayload),
+                        });
+
+                        if (!activityResponse.ok)
+                            throw new Error(
+                                `Activity submission failed: ${activityResponse.statusText}`
+                            );
+
+                        const quizResponse = await fetch(`${BACKEND_URL}/api/quizzes`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(quizPayload),
+                        });
+
+                        if (!quizResponse.ok)
+                            throw new Error(
+                                `Quiz submission failed: ${quizResponse.statusText}`
+                            );
+
+                        feedbackMessage.textContent =
+                            "Activity and Quiz created successfully!";
+                        feedbackMessage.className =
+                            "mt-4 text-sm font-medium text-green-600";
+                        mainForm.reset();
+                        loContainer.innerHTML = "";
+                        topicsContainer.innerHTML = "";
+                        questionsContainer.innerHTML = "";
+                    } catch (error) {
+                        feedbackMessage.textContent = `Error: ${error.message}`;
+                        feedbackMessage.className = "mt-4 text-sm font-medium text-red-600";
+                    }
+                });
+
+                // Add one of each field type to start with for user convenience
+                addLoBtn.click();
+                addTopicBtn.click();
+                addQuestionBtn.click();
+            });
+        </script>
+    </body>
+</html>

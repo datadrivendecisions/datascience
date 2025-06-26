@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Ready Course Design Framework</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Scholarly Neutrals -->
+    <!-- Application Structure Plan: The SPA is designed as an interactive, non-linear dashboard. This structure allows educators to easily navigate between high-level principles, course architecture, specific assessment blueprints, and implementation details without scrolling through a long document. The top navigation provides quick access to the four main thematic sections. Key interactions include tabbed content for principles, an interactive gallery for blueprints, and a clickable timeline for the implementation roadmap. This user-centric design was chosen to make the dense, academic report more digestible and actionable. -->
+    <!-- Visualization & Content Choices: 
+    - Report Info: Core concept of "Vulnerable to Vibrant". -> Goal: Inform/Compare. -> Viz: Side-by-side comparison cards. -> Interaction: Static. -> Justification: Provides an immediate, clear visual contrast of the core argument. -> Library/Method: HTML/CSS.
+    - Report Info: AAAE Framework. -> Goal: Organize/Inform. -> Viz: Interactive tabbed panel. -> Interaction: Click to reveal details for Against, Avoid, Adopt, Explore. -> Justification: Breaks down the framework into user-controlled, digestible segments. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Course Architecture (Jigsaw/Ecosystem). -> Goal: Organize/Show Process. -> Viz: Two-part section with styled HTML/CSS diagrams. -> Interaction: Static visual flow. -> Justification: Clearly separates and visually represents the two main architectural ideas (collaboration protocols and the learning loop). -> Library/Method: HTML/CSS.
+    - Report Info: Assessment Blueprints & Strategy Matrix. -> Goal: Inform/Compare. -> Viz: Interactive card gallery and a summary table. -> Interaction: Click cards to expand details. -> Justification: Turns a static list into an engaging, explorable gallery, with the matrix providing a quick-reference summary. -> Library/Method: HTML/CSS/JS.
+    - Report Info: Phased Implementation & Ethics. -> Goal: Show Change/Process/Inform. -> Viz: Clickable horizontal timeline and expandable sections. -> Interaction: Click timeline stages; click to expand policy sections. -> Justification: Presents the roadmap intuitively and makes detailed policy/ethical content accessible without cluttering the main view. -> Library/Method: HTML/CSS/JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .nav-link {
+            transition: color 0.2s, border-bottom-color 0.2s;
+        }
+        .nav-link.active {
+            color: #14b8a6; /* teal-500 */
+            border-bottom-color: #14b8a6;
+        }
+        .tab-button.active {
+            background-color: #0f766e; /* teal-700 */
+            color: white;
+        }
+        .principle-btn.active {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+        }
+        .principle-btn.active h4, .principle-btn.active p {
+             color: white;
+        }
+        .blueprint-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .blueprint-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .timeline-item.active .timeline-dot {
+            background-color: #14b8a6; /* teal-500 */
+            transform: scale(1.25);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hidden {
+            display: none;
+        }
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <nav class="container mx-auto px-4 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="text-xl lg:text-2xl font-bold text-slate-800">
+                    <span class="text-teal-600">Vibrant</span> Course Design
+                </div>
+                <div class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#introduction" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Introduction</a>
+                    <a href="#principles" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Principles</a>
+                    <a href="#architecture" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Architecture</a>
+                    <a href="#blueprints" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Blueprints</a>
+                    <a href="#implementation" class="nav-link text-slate-600 font-medium border-b-2 border-transparent pb-1">Implementation</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 lg:px-8 py-8 md:py-12">
+
+        <section id="introduction" class="text-center py-12 lg:py-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">From Vulnerable to Vibrant</h1>
+            <p class="max-w-3xl mx-auto text-lg text-slate-600 mb-12">
+                This interactive framework translates the "From Vulnerable to Vibrant" report into an explorable experience. It provides a practical blueprint for redesigning a Data Mining curriculum to be resilient, relevant, and engaging in the age of AI.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-stretch gap-8">
+                <div class="w-full md:w-1/2 bg-white p-6 rounded-xl shadow-lg border flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-3 text-red-600">Vulnerable Course Design</h3>
+                     <ul class="text-left space-y-2 text-slate-600 flex-grow">
+                        <li class="flex items-start"><span class="text-red-500 mr-2 mt-1 shrink-0">●</span><div><strong>High AI Misuse Risk:</strong> Traditional assessments are easily completed with GenAI.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2 mt-1 shrink-0">●</span><div><strong>Product-Focused:</strong> Evaluates the final, easily automated answer, not the learning process.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-2 mt-1 shrink-0">●</span><div><strong>Passive Learning:</strong> Individualistic, lecture-based formats can lead to disengagement.</div></li>
+                    </ul>
+                </div>
+                 <div class="w-full md:w-1/2 bg-white p-6 rounded-xl shadow-lg border flex flex-col">
+                    <h3 class="text-2xl font-semibold mb-3 text-teal-600">Vibrant Course Design</h3>
+                     <ul class="text-left space-y-2 text-slate-600 flex-grow">
+                        <li class="flex items-start"><span class="text-teal-500 mr-2 mt-1 shrink-0">●</span><div><strong>AI-Resilient by Design:</strong> Assessments focus on higher-order human skills.</div></li>
+                        <li class="flex items-start"><span class="text-teal-500 mr-2 mt-1 shrink-0">●</span><div><strong>Process-Focused:</strong> Evaluates critical thinking, inquiry, and AI collaboration.</div></li>
+                        <li class="flex items-start"><span class="text-teal-500 mr-2 mt-1 shrink-0">●</span><div><strong>Active Learning:</strong> Collaborative, ecosystem-based approach fosters engagement and accountability.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="principles" class="py-12 lg:py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Core Pedagogical Principles</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-slate-600">
+                    Before redesigning assignments, we must establish a new pedagogical foundation. This section explores the three core principles that guide the shift to an AI-integrated, process-oriented curriculum.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1">
+                        <div id="principle-nav" class="flex flex-col space-y-2">
+                             <button data-target="content-aaae" class="principle-btn text-left p-4 rounded-lg w-full transition duration-200 bg-slate-100 hover:bg-teal-100">
+                                <h4 class="font-semibold text-lg text-slate-800">1. The AAAE Framework</h4>
+                                <p class="text-sm text-slate-600">A strategic compass for AI use in assessment.</p>
+                            </button>
+                             <button data-target="content-process" class="principle-btn text-left p-4 rounded-lg w-full transition duration-200 bg-slate-100 hover:bg-teal-100">
+                                <h4 class="font-semibold text-lg text-slate-800">2. Process Over Product</h4>
+                                <p class="text-sm text-slate-600">Assessing the 'how', not just the 'what'.</p>
+                            </button>
+                            <button data-target="content-symbiosis" class="principle-btn text-left p-4 rounded-lg w-full transition duration-200 bg-slate-100 hover:bg-teal-100">
+                                <h4 class="font-semibold text-lg text-slate-800">3. Human-AI Symbiosis</h4>
+                                <p class="text-sm text-slate-600">Cultivating critical AI literacy.</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="principle-content-area" class="lg:col-span-2 min-h-[300px]">
+                        <div id="content-aaae" class="principle-content">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-4">The AAAE Framework</h3>
+                            <p class="mb-6 text-slate-600">Go beyond a simple "allow vs. ban" policy. This framework provides a strategic taxonomy to design and sequence assessments. Click a category to learn more.</p>
+                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="aaae-tabs">
+                                <button data-target="aaae-against" class="tab-button p-3 rounded-lg font-semibold bg-red-100 text-red-800 hover:bg-red-200 transition">Against</button>
+                                <button data-target="aaae-avoid" class="tab-button p-3 rounded-lg font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 transition">Avoid</button>
+                                <button data-target="aaae-adopt" class="tab-button p-3 rounded-lg font-semibold bg-sky-100 text-sky-800 hover:bg-sky-200 transition">Adopt</button>
+                                <button data-target="aaae-explore" class="tab-button p-3 rounded-lg font-semibold bg-teal-100 text-teal-800 hover:bg-teal-200 transition">Explore</button>
+                            </div>
+                            <div id="aaae-content-area" class="mt-4 p-4 bg-slate-50 rounded-lg border min-h-[150px]">
+                                <div id="aaae-against" class="aaae-content hidden"><h5 class="font-bold text-red-800">Against (No AI Use)</h5><p class="text-sm text-slate-700 mt-2">Reserved for evaluating foundational knowledge where AI reliance must be eliminated to ensure students have internalized core concepts. Examples: in-class quizzes, proctored oral presentations.</p></div>
+                                <div id="aaae-avoid" class="aaae-content hidden"><h5 class="font-bold text-amber-800">Avoid (AI-Resistant by Design)</h5><p class="text-sm text-slate-700 mt-2">The core defensive strategy. Tasks designed to evaluate higher-order skills AI struggles with, like creativity, complex problem-solving, and ethical reasoning. Examples: performance-based scenarios, creating infographics.</p></div>
+                                <div id="aaae-adopt" class="aaae-content hidden"><h5 class="font-bold text-sky-800">Adopt (AI as an Integrated Tool)</h5><p class="text-sm text-slate-700 mt-2">Proactive and transparent integration. Students are required to use AI for specific tasks (e.g., brainstorming, code drafting) and then critically evaluate and modify the output.</p></div>
+                                <div id="aaae-explore" class="aaae-content hidden"><h5 class="font-bold text-teal-800">Explore (AI as a Collaborative Partner)</h5><p class="text-sm text-slate-700 mt-2">The most advanced application. Students partner with AI to tackle complex, open-ended problems, fostering the highest levels of critical thinking and adaptability.</p></div>
+                                <div id="aaae-default" class="aaae-content text-center text-slate-500 pt-10">Select a category to see its description.</div>
+                            </div>
+                        </div>
+
+                        <div id="content-process" class="principle-content hidden">
+                            <h3 class="text-2xl font-bold text-slate-800 mb-4">The Primacy of Process</h3>
+                            <p class="mb-4 text-slate-600">Since AI excels at producing polished final products, the most powerful strategic shift is to move evaluation from the product to the process of inquiry, creation, and refinement. This enhances academic integrity and fosters deep metacognitive skills.</p>
+                            <ul class="space-y-3">
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">Mandatory Prompt Documentation</h5><p class="text-sm text-slate-600">Students submit their complete interaction history with any AI tool, holding them accountable for their process.</p></li>
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">The Critical Reflection Wrapper</h5><p class="text-sm text-slate-600">Students submit a critique of the AI's contribution, identifying errors, biases, and justifying every decision to accept, reject, or modify suggestions.</p></li>
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">Process-Oriented Rubrics</h5><p class="text-sm text-slate-600">Grades are allocated based on the quality of prompt engineering and critical reflection, not just the correctness of the final output.</p></li>
+                            </ul>
+                        </div>
+                        
+                        <div id="content-symbiosis" class="principle-content hidden">
+                             <h3 class="text-2xl font-bold text-slate-800 mb-4">Human-AI Symbiosis</h3>
+                             <p class="mb-4 text-slate-600">The goal is to cultivate critical AI literacy by moving students beyond viewing AI as a simple "calculator" for answers and toward understanding it as a "cognitive prosthesis"—a tool that can augment but never replace human cognition.</p>
+                             <ul class="space-y-3">
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">Understanding Strengths and Limitations</h5><p class="text-sm text-slate-600">Recognizing which tasks are well-suited for AI and which require human oversight.</p></li>
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">Recognizing and Mitigating Bias</h5><p class="text-sm text-slate-600">Developing a critical awareness of the biases inherent in AI training data and outputs.</p></li>
+                                <li class="p-3 bg-slate-50 rounded-lg border"><h5 class="font-semibold">Developing Prompt Literacy</h5><p class="text-sm text-slate-600">Mastering prompt engineering as a core competency for quality output.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="py-12 lg:py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Course Architecture</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-slate-600">
+                    This section outlines a new course structure that embeds the core principles into the weekly flow. The architecture is built on two pillars: structured collaborative learning and a dynamic, student-driven learning ecosystem.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">The Collaborative Classroom</h3>
+                    <p class="text-slate-600 mb-4">Structured protocols like the Jigsaw method create positive interdependence and individual accountability. This forms an organic defense against AI misuse, as learning becomes a social, dialogic process.</p>
+                    <div class="border-2 border-dashed border-slate-300 rounded-lg p-4">
+                        <h4 class="font-semibold text-center text-slate-700">Jigsaw Method Flow</h4>
+                        <div class="flex items-center justify-between mt-4 text-center text-sm font-medium text-slate-600">
+                            <span>1. Home<br>Groups</span>
+                            <span class="text-slate-400 font-bold text-xl mx-2">→</span>
+                            <span>2. Expert<br>Groups</span>
+                            <span class="text-slate-400 font-bold text-xl mx-2">→</span>
+                            <span>3. Home<br>Groups</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-4">The Learning Ecosystem</h3>
+                    <p class="text-slate-600 mb-4">The course shifts from a linear sequence to a student-driven ecosystem. This model fundamentally alters the instructor's role from content provider to community architect.</p>
+                     <div class="border-2 border-dashed border-slate-300 rounded-lg p-4">
+                        <h4 class="font-semibold text-center text-slate-700">Continuous Learning Loop</h4>
+                         <div class="flex items-center justify-between mt-4 text-center text-sm font-medium text-slate-600">
+                             <span class="p-2 bg-teal-50 rounded-md">① Create</span>
+                             <span class="text-teal-400 font-bold text-xl mx-2">→</span>
+                             <span class="p-2 bg-sky-50 rounded-md">② Review</span>
+                              <span class="text-sky-400 font-bold text-xl mx-2">→</span>
+                             <span class="p-2 bg-amber-50 rounded-md">③ Practice</span>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="blueprints" class="py-12 lg:py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Assessment Blueprints</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-slate-600">
+                    Explore four practical, adaptable assignment blueprints designed to assess process, critical thinking, and communication, making them inherently resilient to AI misuse. Click each card for details.
+                </p>
+            </div>
+            <div id="blueprint-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+            <div class="mt-12 bg-white p-6 rounded-lg shadow-lg border">
+                <h3 class="text-2xl font-bold text-slate-800 mb-4 text-center">Assessment Strategy Matrix</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-slate-500">
+                        <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 rounded-l-lg">Assessment Blueprint</th>
+                                <th scope="col" class="px-6 py-3">AAAE Category</th>
+                                <th scope="col" class="px-6 py-3">Primary Learning Objective(s)</th>
+                                <th scope="col" class="px-6 py-3 rounded-r-lg">AI Risk Mitigated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="strategy-matrix">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="implementation" class="py-12 lg:py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-800">Implementation & Ethics</h2>
+                <p class="max-w-3xl mx-auto mt-4 text-lg text-slate-600">
+                    A significant course redesign requires careful planning. This section provides a practical roadmap for phased implementation and addresses key ethical considerations for a successful transition.
+                </p>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-6 text-center">Phased Implementation Roadmap</h3>
+            <div class="w-full mb-12">
+                <div class="relative">
+                    <div class="hidden md:block absolute top-4 left-0 w-full h-0.5 bg-slate-300"></div>
+                    <div id="timeline-nav" class="relative flex flex-col md:flex-row justify-between w-full">
+                    </div>
+                </div>
+                 <div id="timeline-content-area" class="mt-8">
+                 </div>
+            </div>
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                <details class="bg-white rounded-xl shadow-lg p-6 border cursor-pointer">
+                    <summary class="font-semibold text-xl text-slate-800 flex justify-between items-center">
+                        Crafting Your AI Policy
+                        <span class="text-teal-500 transform transition-transform duration-300">▼</span>
+                    </summary>
+                    <div class="mt-4 text-slate-600 space-y-2">
+                        <p>A clear, nuanced, and explicit AI policy in the syllabus is essential. A one-size-fits-all ban is impractical. Ground your policy in the AAAE framework.</p>
+                        <p class="p-3 bg-slate-50 border-l-4 border-teal-500 rounded-r-lg"><strong>Example Wording:</strong> "In this course, our approach to AI will be strategic, following the AAAE framework. On assignments designated 'Adopt' or 'Explore,' AI use is permitted but requires full disclosure of prompts and outputs. On 'Against' or 'Avoid' assignments, AI use is a violation of academic integrity."</p>
+                    </div>
+                </details>
+                <details class="bg-white rounded-xl shadow-lg p-6 border cursor-pointer">
+                    <summary class="font-semibold text-xl text-slate-800 flex justify-between items-center">
+                        Ensuring Equity and Access
+                        <span class="text-teal-500 transform transition-transform duration-300">▼</span>
+                    </summary>
+                     <div class="mt-4 text-slate-600 space-y-2">
+                        <p>Address the "digital divide" by ensuring assignments don't depend on premium AI tools. The most robust strategy for equity is to assess the uniquely human contributions.</p>
+                         <ul class="list-disc list-inside space-y-1">
+                            <li>Design for accessibility using free-tier tools.</li>
+                            <li>Standardize the toolset if possible.</li>
+                            <li>Assess the human (critical analysis, prompt engineering), not the machine output.</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+        </section>
+        
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 mt-16">
+        <div class="container mx-auto px-4 lg:px-8 py-8 text-center">
+            <p>Interactive Framework for AI-Ready Course Design</p>
+            <p class="text-sm text-slate-400 mt-2">Adapted from the "From Vulnerable to Vibrant" report.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blueprintData = [
+                {
+                    id: 'bp1', title: 'Data Detective Escape Room', icon: '🧩', category: 'Avoid', categoryColor: 'amber',
+                    summary: 'A multi-stage, narrative-driven investigation in Jupyter notebooks where each solved puzzle unlocks the next stage.',
+                    description: 'Students act as "data detectives" solving a mystery. Each stage presents a data puzzle (e.g., cleaning, visualization, modeling). The solution to that puzzle serves as the key to unlock the next notebook. This sequential structure is naturally AI-resistant.',
+                    rationale: 'Assesses the entire data science workflow in an authentic, problem-based context. The narrative and puzzle-based progression make it highly engaging and difficult to solve with isolated AI queries.'
+                },
+                {
+                    id: 'bp2', title: 'Data Storytelling Challenge', icon: '🎤', category: 'Avoid / Adopt', categoryColor: 'sky',
+                    summary: 'Students create a short video presentation explaining the "story" in a complex dataset to a non-expert audience.',
+                    description: 'Given a complex, real-world dataset and a broad prompt, students must perform exploratory data analysis and then synthesize their findings into a compelling, understandable narrative for a specific, non-expert audience.',
+                    rationale: 'Assesses high-level human skills: communication, critical thinking, creativity, and audience awareness. While AI can assist with parts, the core synthesis remains a human endeavor.'
+                },
+                {
+                    id: 'bp3', title: 'AI as Junior Analyst', icon: '🤖', category: 'Adopt / Explore', categoryColor: 'teal',
+                    summary: 'Students use an AI as an assistant for a data mining task, then submit a critical review of the AI\'s work.',
+                    description: 'The core deliverable is not just the final project, but a "process portfolio" including: a log of all AI prompts, the AI\'s raw output, a critical review where the student "marks up" the AI\'s errors, and the student\'s final, improved version with justifications for their changes.',
+                    rationale: 'Directly measures and develops a student\'s ability to critically collaborate with AI. It assesses their capacity to leverage AI\'s strengths while identifying and correcting its weaknesses.'
+                },
+                {
+                    id: 'bp4', title: '"Explain It Like I\'m Five"', icon: '💡', category: 'Adopt', categoryColor: 'teal',
+                    summary: 'Students create a multimodal artifact (video, interactive app) to explain a complex concept to a complete novice.',
+                    description: 'Leveraging the principle that teaching requires deep understanding, students select a complex data mining concept and create a short, creative artifact to explain it simply. Artifacts are then submitted to a peer-review ecosystem.',
+                    rationale: 'Requires students to synthesize complex information and communicate it creatively. The multimodal nature of the artifact is difficult to generate wholesale with AI.'
+                }
+            ];
+            
+            const strategyMatrixData = [
+                { blueprint: "Data Detective Escape Room", category: "Avoid", objective: "Applied problem-solving; Logical sequencing", risk: "Direct answer generation for isolated problems." },
+                { blueprint: "Data Storytelling Challenge", category: "Avoid / Adopt", objective: "Critical thinking; Communication; Visualization", risk: "Generic, non-contextual analysis." },
+                { blueprint: "AI as Junior Analyst", category: "Adopt / Explore", objective: "AI literacy; Critical evaluation; Prompt engineering", risk: "Over-reliance on flawed AI output." },
+                { blueprint: '"Explain It Like I\'m Five"', category: "Adopt", objective: "Deep conceptual understanding; Synthesis", risk: "Plagiarism of existing explanations." }
+            ];
+
+            const timelineData = [
+                {
+                    id: 'phase1', title: 'Semester 1: Pilot Phase',
+                    summary: 'Introduce one or two key elements to test logistics and gather feedback in a controlled manner.',
+                    actions: [
+                        'Implement the Jigsaw collaborative protocol for one or two modules.',
+                        'Introduce the "AI as Junior Analyst" assignment.',
+                        'Keep other course elements traditional to establish a baseline.',
+                        'Gather student feedback on the new components.'
+                    ]
+                },
+                {
+                    id: 'phase2', title: 'Semester 2: Expansion',
+                    summary: 'Based on pilot success, expand the new methods and introduce more advanced components.',
+                    actions: [
+                        'Implement the full peer-review ecosystem for a series of smaller "creation" tasks.',
+                        'Introduce a second major blueprint, such as the "Data Detective Escape Room".',
+                        'Refine rubrics based on pilot feedback.'
+                    ]
+                },
+                {
+                    id: 'phase3', title: 'Semester 3: Full Integration',
+                    summary: 'The course now runs fully in its redesigned format, with a focus on refinement.',
+                    actions: [
+                        'Integrate all collaborative protocols and assessment blueprints.',
+                        'The instructor\'s role shifts to system architect, facilitator, and expert overseer.',
+                        'Continuously refine the system and rubrics.'
+                    ]
+                }
+            ];
+
+            const blueprintGallery = document.getElementById('blueprint-gallery');
+            blueprintData.forEach(bp => {
+                const card = document.createElement('div');
+                card.className = 'blueprint-card bg-white rounded-xl shadow-lg border p-6 cursor-pointer flex flex-col';
+                card.innerHTML = `
+                    <div class="flex-grow">
+                        <div class="text-4xl mb-4">${bp.icon}</div>
+                        <span class="inline-block bg-${bp.categoryColor}-100 text-${bp.categoryColor}-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full mb-2">${bp.category}</span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">${bp.title}</h3>
+                        <p class="text-slate-600 text-sm">${bp.summary}</p>
+                    </div>
+                    <div class="details-panel hidden mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-semibold text-slate-800">Description:</h4>
+                        <p class="text-sm text-slate-600 mb-3">${bp.description}</p>
+                        <h4 class="font-semibold text-slate-800">Rationale:</h4>
+                        <p class="text-sm text-slate-600">${bp.rationale}</p>
+                    </div>
+                `;
+                blueprintGallery.appendChild(card);
+            });
+
+            const strategyMatrixBody = document.getElementById('strategy-matrix');
+            strategyMatrixData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'bg-white border-b';
+                tr.innerHTML = `
+                    <th scope="row" class="px-6 py-4 font-medium text-slate-900 whitespace-nowrap">${row.blueprint}</th>
+                    <td class="px-6 py-4">${row.category}</td>
+                    <td class="px-6 py-4">${row.objective}</td>
+                    <td class="px-6 py-4">${row.risk}</td>
+                `;
+                strategyMatrixBody.appendChild(tr);
+            });
+            
+            blueprintGallery.addEventListener('click', (e) => {
+                const card = e.target.closest('.blueprint-card');
+                if (card) {
+                    const detailsPanel = card.querySelector('.details-panel');
+                    const isActive = card.classList.contains('ring-2');
+
+                    document.querySelectorAll('.blueprint-card').forEach(c => {
+                        c.classList.remove('ring-2', 'ring-teal-500');
+                        c.querySelector('.details-panel').classList.add('hidden');
+                    });
+
+                    if (!isActive) {
+                        card.classList.add('ring-2', 'ring-teal-500');
+                        detailsPanel.classList.remove('hidden');
+                        detailsPanel.classList.add('fade-in');
+                    }
+                }
+            });
+
+
+            const timelineNav = document.getElementById('timeline-nav');
+            const timelineContentArea = document.getElementById('timeline-content-area');
+            timelineData.forEach((phase, index) => {
+                const navItem = document.createElement('div');
+                navItem.className = 'timeline-item flex-1 flex flex-col items-center cursor-pointer p-2 relative';
+                navItem.setAttribute('data-target', `timeline-${phase.id}`);
+                navItem.innerHTML = `
+                    <div class="timeline-dot w-8 h-8 rounded-full bg-slate-300 transition-all duration-300 flex items-center justify-center font-bold text-white z-10">${index + 1}</div>
+                    <div class="text-center mt-2"><span class="font-semibold text-slate-700 text-sm md:text-base">${phase.title}</span></div>
+                `;
+                timelineNav.appendChild(navItem);
+
+                const contentItem = document.createElement('div');
+                contentItem.id = `timeline-${phase.id}`;
+                contentItem.className = 'timeline-content-panel hidden bg-white p-6 rounded-lg shadow border';
+                let actionsHtml = phase.actions.map(action => `<li class="flex items-start"><span class="text-teal-500 mr-2 mt-1 shrink-0">✔</span>${action}</li>`).join('');
+                contentItem.innerHTML = `
+                    <h4 class="text-xl font-bold text-slate-800 mb-2">${phase.title}</h4>
+                    <p class="text-slate-600 mb-4">${phase.summary}</p>
+                    <ul class="space-y-2 text-slate-600">${actionsHtml}</ul>`;
+                timelineContentArea.appendChild(contentItem);
+});
+
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    timelineItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    const targetId = item.dataset.target;
+                    document.querySelectorAll('.timeline-content-panel').forEach(panel => panel.classList.add('hidden'));
+                    const targetPanel = document.getElementById(targetId);
+                    targetPanel.classList.remove('hidden');
+                    targetPanel.classList.add('fade-in');
+                });
+            });
+            if (timelineItems.length > 0) timelineItems[0].click();
+
+            const principleBtns = document.querySelectorAll('.principle-btn');
+            const principleContents = document.querySelectorAll('.principle-content');
+            principleBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    principleBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const targetId = btn.dataset.target;
+                    principleContents.forEach(content => {
+                        content.classList.toggle('hidden', content.id !== targetId);
+                        if(content.id === targetId) content.classList.add('fade-in');
+                    });
+                });
+            });
+            if (principleBtns.length > 0) principleBtns[0].click();
+
+            const aaaeTabs = document.querySelectorAll('#aaae-tabs .tab-button');
+            const aaaeContents = document.querySelectorAll('#aaae-content-area .aaae-content');
+            const aaaeDefault = document.getElementById('aaae-default');
+            aaaeTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    aaaeTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    aaaeDefault.classList.add('hidden');
+                    const targetId = tab.dataset.target;
+                    aaaeContents.forEach(content => {
+                        content.classList.toggle('hidden', content.id !== targetId);
+                         if(content.id === targetId) content.classList.add('fade-in');
+                    });
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-40% 0px -60% 0px" });
+            sections.forEach(section => observer.observe(section));
+
+            document.querySelectorAll('details').forEach((el) => {
+                el.addEventListener('toggle', () => {
+                   el.querySelector('summary span').classList.toggle('rotate-180', el.open);
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

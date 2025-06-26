@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Student Manual: Data Mining Course</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			body {
+				font-family: "Inter", sans-serif;
+				line-height: 1.75;
+			}
+			h2 {
+				@apply text-2xl font-semibold text-sky-700 mb-4 border-b border-sky-100 pb-2;
+			}
+			h3 {
+				@apply text-xl font-bold text-slate-800;
+			}
+			h4 {
+				@apply font-semibold text-slate-800 mb-2;
+			}
+			h5 {
+				@apply text-lg font-semibold text-slate-700 mt-6 mb-2;
+			}
+			.card {
+				@apply bg-slate-50 p-6 rounded-lg border border-slate-200;
+			}
+			.highlight {
+				@apply bg-sky-50 border-l-4 border-sky-500 p-4 rounded-r-lg;
+			}
+		</style>
+	</head>
+	<body class="bg-slate-100">
+		<div class="container mx-auto px-4 py-8 md:py-12">
+			<div
+				class="max-w-4xl mx-auto bg-white p-8 md:p-10 rounded-2xl shadow-lg border border-slate-200"
+			>
+				<header class="text-center border-b border-slate-200 pb-6 mb-8">
+					<h1 class="text-4xl font-bold text-slate-800">Student Manual</h1>
+					<p class="mt-2 text-lg text-slate-600">
+						Your Guide to the Data Mining Course
+					</p>
+				</header>
+
+				<main class="space-y-12">
+					<section id="philosophy">
+						<h2>Welcome to the Learning Ecosystem</h2>
+						<p class="text-slate-700">
+							This course is designed to be a hands-on, collaborative
+							experience. Your learning is driven by active participation in two
+							key roles: being a member of your permanent "Home Group" and
+							serving once as a member of a temporary "Expert Group". This
+							manual explains your responsibilities, the weekly schedule, and
+							how your success will be measured.
+						</p>
+					</section>
+
+					<section id="roles">
+						<h2>Your Roles & Responsibilities</h2>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+							<div class="card">
+								<div class="flex items-center mb-3">
+									<div
+										class="w-12 h-12 bg-teal-100 text-teal-600 rounded-full flex items-center justify-center text-2xl font-bold mr-4"
+									>
+										🏠
+									</div>
+									<h3>Your Home Group</h3>
+								</div>
+								<p class="text-slate-700">
+									This is your project team for the entire course. In Week 1,
+									you will receive a
+									<strong>unique business case and dataset</strong>. Your
+									group's goal is to apply the CRISP-DM process to this project
+									over the six weeks. Your final project will be a recorded
+									video presentation submitted to <strong>HANDIN</strong>.
+								</p>
+							</div>
+							<div class="card">
+								<div class="flex items-center mb-3">
+									<div
+										class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-2xl font-bold mr-4"
+									>
+										🎓
+									</div>
+									<h3>Your Expert Group</h3>
+								</div>
+								<p class="text-slate-700">
+									Once during the course, you will join an "Expert Group" to
+									master a specific CRISP-DM phase. Your mission is to create
+									<strong>general-purpose teaching materials</strong> for the
+									entire class and teach this concept to your Home Group the
+									following week.
+								</p>
+							</div>
+						</div>
+					</section>
+
+					<section id="schedule">
+						<h2>Weekly Schedule & Key Tasks</h2>
+						<div class="space-y-4">
+							<details class="card" open>
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 1: Business Understanding
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> Receive your unique project and
+									begin initial analysis. <br /><strong>Expert Group 1:</strong>
+									Meet with the instructor, then create a guide and quiz for
+									this topic during your homework time.
+								</div>
+							</details>
+							<details class="card">
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 2: Data Understanding
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> Learn from your expert peer, take
+									their quiz, and apply the "Business Understanding" concepts to
+									your project. The instructor will assess your individual
+									contributions. <br /><strong>Expert Group 2:</strong> Meet
+									with the instructor, then create a tutorial notebook and quiz.
+								</div>
+							</details>
+							<details class="card">
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 3: Data Preparation
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> Learn from your expert peer, take
+									their quiz, and work on the "Data Understanding" phase of your
+									project. The instructor will assess your individual
+									contributions. <br /><strong>Expert Group 3:</strong> Meet
+									with the instructor, then create a checklist and quiz.
+								</div>
+							</details>
+							<details class="card">
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 4: Modeling
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> Learn from your expert peer, take
+									their quiz, and work on the "Data Preparation" phase of your
+									project. The instructor will assess your individual
+									contributions. <br /><strong>Expert Group 4:</strong> Meet
+									with the instructor, then create a code template and quiz.
+								</div>
+							</details>
+							<details class="card">
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 5: Project Workshop
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> Learn the final topic from your
+									expert peer and take their quiz. You will then give a status
+									update on your project and participate in a peer-feedback
+									session. The instructor will assess your individual
+									contributions to the modeling phase.
+								</div>
+							</details>
+							<details class="card">
+								<summary class="font-semibold text-lg cursor-pointer">
+									Week 6: Final Submission
+								</summary>
+								<div class="mt-2 pl-4 text-slate-600">
+									<strong>Home Group:</strong> There is no new topic. During
+									your homework time, you will record your final 15-minute video
+									presentation and submit your complete project package (video,
+									code, data, etc.) to the <strong>HANDIN</strong> system. The
+									final in-class session will be a course wrap-up.
+								</div>
+							</details>
+						</div>
+					</section>
+
+					<section id="assessment-framework">
+						<h2>How Your Grade is Calculated</h2>
+						<p class="text-slate-700 mb-6">
+							Your final grade is a sophisticated measure of your skills. It's
+							calculated from two separate Bayesian scores that are updated
+							weekly. This system is designed to reward both what you know and
+							how well you apply it.
+						</p>
+						<div
+							class="text-center p-4 bg-gray-800 text-white rounded-lg font-bold text-xl"
+						>
+							Final Grade = 60% (Average of 4 Individual Mastery Scores) + 40%
+							(Teaching Effectiveness Score)
+						</div>
+
+						<div class="mt-8 space-y-8">
+							<div class="highlight">
+								<h3 class="mb-2">
+									Component 1: Individual Mastery Score (60% of grade)
+								</h3>
+								<p class="text-slate-700">
+									This score measures your personal, applied understanding of
+									each of the four main topics. It is calculated weekly and is
+									based <strong>only on your own scores</strong>.
+								</p>
+								<div
+									class="mt-4 bg-white p-4 rounded-md border border-slate-200"
+								>
+									<h4>How it's Calculated for Each Topic:</h4>
+									<ol class="list-decimal list-inside space-y-2">
+										<li>
+											<strong>The Prior (Quiz Score):</strong> Your score on the
+											5-question peer quiz creates your baseline. This shows
+											your foundational knowledge.
+										</li>
+										<li>
+											<strong>The Evidence (Instructor Score):</strong> The
+											instructor assesses your personal contribution to your
+											group's project that week using the "Weekly Individual
+											Contribution Rubric." This shows your applied skill.
+										</li>
+										<li>
+											<strong>The Posterior (Final Topic Score):</strong> The
+											instructor's score updates your quiz score to produce a
+											final, more accurate mastery probability for that topic.
+										</li>
+									</ol>
+									<div class="mt-4 p-3 bg-slate-100 rounded">
+										<p class="font-semibold">
+											Example for "Data Understanding":
+										</p>
+										<ul class="text-sm list-disc list-inside">
+											<li>
+												You score <strong>4/5</strong> on the peer quiz. (Prior:
+												alpha=4, beta=1)
+											</li>
+											<li>
+												The instructor gives your individual contribution a
+												<strong>2/5</strong>. (Evidence: successes=2,
+												failures=3)
+											</li>
+											<li>
+												Your mastery score for this topic becomes
+												<strong>60.0%</strong>.
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+							<div class="highlight">
+								<h3 class="mb-2">
+									Component 2: Teaching Effectiveness Score (40% of grade)
+								</h3>
+								<p class="text-slate-700">
+									This score is calculated
+									<strong>only for the week you serve as an expert</strong>. It
+									measures how well you enabled your Home Group peers to learn
+									your topic, based entirely on their average performance.
+								</p>
+								<div
+									class="mt-4 bg-white p-4 rounded-md border border-slate-200"
+								>
+									<h4>How it's Calculated:</h4>
+									<ol class="list-decimal list-inside space-y-2">
+										<li>
+											<strong>The Prior (Group Quiz Average):</strong> The
+											baseline is the average score of your 4 Home Group peers
+											on the quiz *you created*. This shows if your teaching
+											materials and quiz were effective.
+										</li>
+										<li>
+											<strong
+												>The Evidence (Group Instructor Score Average):</strong
+											>
+											The evidence is the *average score* your 4 peers received
+											from the instructor on their individual contributions for
+											the topic you taught. This shows if they could apply what
+											you taught them.
+										</li>
+										<li>
+											<strong>The Posterior (Final Score):</strong> The group's
+											average application score updates their average quiz score
+											to produce your final Teaching Effectiveness score.
+										</li>
+									</ol>
+									<div class="mt-4 p-3 bg-slate-100 rounded">
+										<p class="font-semibold">Example:</p>
+										<ul class="text-sm list-disc list-inside">
+											<li>
+												Your 4 peers score a combined <strong>15/20</strong> on
+												your quiz. (Prior: alpha=15, beta=5)
+											</li>
+											<li>
+												Your 4 peers earn an average score of
+												<strong>4/5</strong> on the instructor's assessment.
+												(Evidence: successes=4, failures=1)
+											</li>
+											<li>
+												Your Teaching Effectiveness score becomes
+												<strong>76.0%</strong>.
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<section id="rubrics">
+						<h2>Detailed Weekly Assessment Rubrics</h2>
+						<p class="text-slate-700 mb-6">
+							Each week (from Week 2 to 5), the instructor will use the
+							following rubrics to assess your personal contribution to your
+							Home Group's project work. This score is critical as it provides
+							the "evidence" for your Individual Mastery calculation.
+						</p>
+
+						<div class="space-y-8">
+							<!-- Week 2 Rubric -->
+							<div class="card">
+								<h5>Week 2: Assessing Business Understanding</h5>
+								<ul class="text-sm text-slate-600 mb-4 list-disc list-inside">
+									<li>
+										<strong>Topics:</strong> Data mining goals, success
+										criteria, project planning.
+									</li>
+									<li>
+										<strong>Bloom's Levels:</strong> `Understand`, `Apply`,
+										`Analyze`.
+									</li>
+								</ul>
+								<div class="overflow-x-auto">
+									<table class="w-full text-sm text-left">
+										<thead
+											class="text-xs text-slate-700 uppercase bg-slate-200"
+										>
+											<tr>
+												<th class="px-4 py-2">Criteria</th>
+												<th class="px-4 py-2">Level 0 (Insufficient)</th>
+												<th class="px-4 py-2">Level 1 (Sufficient)</th>
+												<th class="px-4 py-2">Level 2 (Excellent)</th>
+												<th class="px-4 py-2 text-center">Score</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="border-b">
+												<td class="px-4 py-3 font-semibold">
+													1. Problem Framing
+												</td>
+												<td class="px-4 py-3">
+													Student's contributions show a misunderstanding of the
+													core business problem.
+												</td>
+												<td class="px-4 py-3">
+													Student accurately identifies the business problem and
+													participates in framing the data mining goal.
+												</td>
+												<td class="px-4 py-3">
+													Student provides key insights that help the group
+													frame a sharp, specific, and measurable data mining
+													goal.
+												</td>
+												<td class="px-4 py-3 text-center">/ 2</td>
+											</tr>
+											<tr>
+												<td class="px-4 py-3 font-semibold">
+													2. Success Criteria Definition
+												</td>
+												<td class="px-4 py-3">
+													Student does not contribute to defining success
+													criteria, or the suggestions are not measurable.
+												</td>
+												<td class="px-4 py-3">
+													Student contributes to defining clear and measurable
+													technical and business success criteria.
+												</td>
+												<td class="px-4 py-3">
+													Student proposes nuanced success criteria that
+													directly link technical outputs to business value.
+												</td>
+												<td class="px-4 py-3 text-center">/ 3</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr class="font-semibold text-slate-800 bg-slate-200">
+												<td colspan="4" class="px-4 py-2 text-right">
+													Total Score
+												</td>
+												<td class="px-4 py-2 text-center">/ 5</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+
+							<!-- Week 3 Rubric -->
+							<div class="card">
+								<h5>Week 3: Assessing Data Understanding</h5>
+								<ul class="text-sm text-slate-600 mb-4 list-disc list-inside">
+									<li>
+										<strong>Topics:</strong> Exploratory Data Analysis (EDA),
+										summary statistics, data quality checks.
+									</li>
+									<li><strong>Bloom's Levels:</strong> `Apply`, `Analyze`.</li>
+								</ul>
+								<div class="overflow-x-auto">
+									<table class="w-full text-sm text-left">
+										<thead
+											class="text-xs text-slate-700 uppercase bg-slate-200"
+										>
+											<tr>
+												<th class="px-4 py-2">Criteria</th>
+												<th class="px-4 py-2">Level 0 (Insufficient)</th>
+												<th class="px-4 py-2">Level 1 (Sufficient)</th>
+												<th class="px-4 py-2">Level 2 (Excellent)</th>
+												<th class="px-4 py-2 text-center">Score</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="border-b">
+												<td class="px-4 py-3 font-semibold">
+													1. Technical Execution
+												</td>
+												<td class="px-4 py-3">
+													Student struggles to generate basic statistics or
+													visualizations, or their code is non-functional.
+												</td>
+												<td class="px-4 py-3">
+													Student correctly executes code to generate
+													descriptive statistics and relevant initial plots.
+												</td>
+												<td class="px-4 py-3">
+													Student writes clean, efficient code and explores
+													multiple visualization types to investigate the data.
+												</td>
+												<td class="px-4 py-3 text-center">/ 2</td>
+											</tr>
+											<tr>
+												<td class="px-4 py-3 font-semibold">
+													2. Insight Generation
+												</td>
+												<td class="px-4 py-3">
+													Student simply presents data/plots without
+													interpretation.
+												</td>
+												<td class="px-4 py-3">
+													Student correctly interprets the summary statistics
+													and visualizations to describe the data.
+												</td>
+												<td class="px-4 py-3">
+													Student analyzes the initial findings to form
+													hypotheses or identify specific data quality issues to
+													address next.
+												</td>
+												<td class="px-4 py-3 text-center">/ 3</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr class="font-semibold text-slate-800 bg-slate-200">
+												<td colspan="4" class="px-4 py-2 text-right">
+													Total Score
+												</td>
+												<td class="px-4 py-2 text-center">/ 5</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+
+							<!-- Week 4 Rubric -->
+							<div class="card">
+								<h5>Week 4: Assessing Data Preparation</h5>
+								<ul class="text-sm text-slate-600 mb-4 list-disc list-inside">
+									<li>
+										<strong>Topics:</strong> Handling missing data, outlier
+										treatment, feature engineering.
+									</li>
+									<li><strong>Bloom's Levels:</strong> `Apply`, `Evaluate`.</li>
+								</ul>
+								<div class="overflow-x-auto">
+									<table class="w-full text-sm text-left">
+										<thead
+											class="text-xs text-slate-700 uppercase bg-slate-200"
+										>
+											<tr>
+												<th class="px-4 py-2">Criteria</th>
+												<th class="px-4 py-2">Level 0 (Insufficient)</th>
+												<th class="px-4 py-2">Level 1 (Sufficient)</th>
+												<th class="px-4 py-2">Level 2 (Excellent)</th>
+												<th class="px-4 py-2 text-center">Score</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="border-b">
+												<td class="px-4 py-3 font-semibold">
+													1. Technique Application
+												</td>
+												<td class="px-4 py-3">
+													Student's contributions to data cleaning are incorrect
+													or inappropriate for the data type.
+												</td>
+												<td class="px-4 py-3">
+													Student correctly applies standard data preparation
+													techniques (e.g., imputation, scaling) to the project
+													dataset.
+												</td>
+												<td class="px-4 py-3">
+													Student proposes and correctly implements multiple or
+													advanced techniques appropriate for the group's
+													specific data challenges.
+												</td>
+												<td class="px-4 py-3 text-center">/ 2</td>
+											</tr>
+											<tr>
+												<td class="px-4 py-3 font-semibold">
+													2. Justification of Process
+												</td>
+												<td class="px-4 py-3">
+													Student cannot explain why certain data preparation
+													steps were taken.
+												</td>
+												<td class="px-4 py-3">
+													Student can clearly justify the choices the group made
+													for handling missing data and creating features.
+												</td>
+												<td class="px-4 py-3">
+													Student provides a strong, data-driven argument for
+													their preparation strategy, considering the potential
+													impact on the future model.
+												</td>
+												<td class="px-4 py-3 text-center">/ 3</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr class="font-semibold text-slate-800 bg-slate-200">
+												<td colspan="4" class="px-4 py-2 text-right">
+													Total Score
+												</td>
+												<td class="px-4 py-2 text-center">/ 5</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+
+							<!-- Week 5 Rubric -->
+							<div class="card">
+								<h5>Week 5: Assessing Modeling</h5>
+								<ul class="text-sm text-slate-600 mb-4 list-disc list-inside">
+									<li>
+										<strong>Topics:</strong> Algorithm implementation, model
+										training, performance metrics.
+									</li>
+									<li><strong>Bloom's Levels:</strong> `Apply`, `Evaluate`.</li>
+								</ul>
+								<div class="overflow-x-auto">
+									<table class="w-full text-sm text-left">
+										<thead
+											class="text-xs text-slate-700 uppercase bg-slate-200"
+										>
+											<tr>
+												<th class="px-4 py-2">Criteria</th>
+												<th class="px-4 py-2">Level 0 (Insufficient)</th>
+												<th class="px-4 py-2">Level 1 (Sufficient)</th>
+												<th class="px-4 py-2">Level 2 (Excellent)</th>
+												<th class="px-4 py-2 text-center">Score</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="border-b">
+												<td class="px-4 py-3 font-semibold">
+													1. Model Implementation
+												</td>
+												<td class="px-4 py-3">
+													Student's contributions to the model code are
+													incorrect or do not run.
+												</td>
+												<td class="px-4 py-3">
+													Student correctly implements the modeling algorithm
+													and trains it on the prepared data.
+												</td>
+												<td class="px-4 py-3">
+													Student contributes to refining the model, for
+													example, by implementing proper cross-validation or
+													initial hyperparameter tuning.
+												</td>
+												<td class="px-4 py-3 text-center">/ 2</td>
+											</tr>
+											<tr>
+												<td class="px-4 py-3 font-semibold">
+													2. Performance Evaluation
+												</td>
+												<td class="px-4 py-3">
+													Student does not assess the model's performance or
+													uses an inappropriate metric.
+												</td>
+												<td class="px-4 py-3">
+													Student calculates and correctly interprets standard
+													performance metrics (e.g., accuracy, confusion
+													matrix).
+												</td>
+												<td class="px-4 py-3">
+													Student analyzes the model's performance in the
+													context of the business success criteria and
+													identifies specific areas of weakness (e.g., high
+													false positives).
+												</td>
+												<td class="px-4 py-3 text-center">/ 3</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr class="font-semibold text-slate-800 bg-slate-200">
+												<td colspan="4" class="px-4 py-2 text-right">
+													Total Score
+												</td>
+												<td class="px-4 py-2 text-center">/ 5</td>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+						</div>
+					</section>
+				</main>
+			</div>
+		</div>
+	</body>
+</html>

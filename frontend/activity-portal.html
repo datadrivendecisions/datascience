@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Live Activity Views</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			body {
+				font-family: "Inter", sans-serif;
+			}
+			.tab-btn {
+				@apply px-4 py-2 text-sm font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 hover:border-slate-300;
+			}
+			.tab-btn.active {
+				@apply text-sky-600 border-sky-600;
+			}
+			.tab-content {
+				@apply hidden;
+			}
+			.tab-content.active {
+				@apply block;
+			}
+			.card {
+				@apply bg-white p-6 rounded-lg shadow-md border border-slate-200;
+			}
+			.phase-toggle:checked + label {
+				@apply bg-sky-600 text-white border-sky-600;
+			}
+		</style>
+	</head>
+	<body class="bg-slate-50">
+		<div class="container mx-auto px-4 py-8">
+			<h1 class="text-3xl font-bold text-slate-800 mb-6">
+				Live Activity Portal
+			</h1>
+
+			<!-- Tab Navigation -->
+			<div class="border-b border-slate-200 mb-6">
+				<nav id="tab-nav" class="flex -mb-px" aria-label="Tabs">
+					<button class="tab-btn active" data-target="student-activity-view">
+						Student Activity View
+					</button>
+					<button class="tab-btn" data-target="student-quiz-view">
+						Student Quiz View
+					</button>
+					<button class="tab-btn" data-target="instructor-monitoring-view">
+						Instructor Monitoring View
+					</button>
+				</nav>
+			</div>
+
+			<!-- Tab Content -->
+			<div id="tab-content-container">
+				<!-- Task 4.1: Student Activity View -->
+				<div id="student-activity-view" class="tab-content active">
+					<div class="card max-w-2xl mx-auto">
+						<div
+							class="flex flex-col sm:flex-row justify-between sm:items-center mb-4"
+						>
+							<h2 class="text-xl font-semibold text-slate-700">
+								Your Current Task
+							</h2>
+							<div class="mt-4 sm:mt-0">
+								<label
+									for="user-switcher"
+									class="text-sm font-medium text-slate-700 mr-2"
+									>View as:</label
+								>
+								<select
+									id="user-switcher"
+									class="rounded-md border-slate-300 shadow-sm text-sm"
+								></select>
+							</div>
+						</div>
+
+						<div class="mb-4">
+							<p class="text-sm font-medium text-slate-700 mb-2">
+								Select Activity Phase:
+							</p>
+							<div
+								id="phase-selector"
+								class="flex rounded-md shadow-sm"
+								role="group"
+							>
+								<input
+									type="radio"
+									class="hidden phase-toggle"
+									id="phase-expert"
+									name="activity-phase"
+									value="expert"
+									checked
+								/>
+								<label
+									for="phase-expert"
+									class="px-4 py-2 text-sm font-medium text-slate-900 bg-white border border-slate-200 rounded-l-lg hover:bg-slate-100 cursor-pointer"
+									>Expert Group</label
+								>
+
+								<input
+									type="radio"
+									class="hidden phase-toggle"
+									id="phase-jigsaw"
+									name="activity-phase"
+									value="jigsaw"
+								/>
+								<label
+									for="phase-jigsaw"
+									class="px-4 py-2 text-sm font-medium text-slate-900 bg-white border border-slate-200 rounded-r-lg hover:bg-slate-100 cursor-pointer"
+									>Jigsaw Group</label
+								>
+							</div>
+						</div>
+
+						<div
+							id="student-view-content"
+							class="mt-4 pt-4 border-t border-slate-200"
+						>
+							<p class="text-slate-500">Loading your group information...</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Task 4.2: Student Quiz View -->
+				<div id="student-quiz-view" class="tab-content">
+					<div class="card max-w-3xl mx-auto">
+						<h2 class="text-xl font-semibold text-slate-700 mb-1">
+							Activity Quiz
+						</h2>
+						<p class="text-sm text-slate-500 mb-6">
+							Demonstrate your understanding of all topics discussed in the
+							Jigsaw activity.
+						</p>
+						<form id="quiz-form">
+							<div id="quiz-questions-container" class="space-y-6">
+								<p class="text-slate-500">Loading quiz...</p>
+							</div>
+							<div class="mt-8 text-center">
+								<button
+									type="submit"
+									class="w-full md:w-auto px-6 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700"
+								>
+									Submit Quiz
+								</button>
+							</div>
+						</form>
+						<div id="quiz-feedback" class="mt-4 text-center font-medium"></div>
+					</div>
+				</div>
+
+				<!-- Task 4.3: Instructor Monitoring View -->
+				<div id="instructor-monitoring-view" class="tab-content">
+					<div class="text-center mb-6">
+						<button
+							id="load-groups-btn"
+							class="px-6 py-2 bg-sky-600 text-white font-semibold rounded-md hover:bg-sky-700"
+						>
+							Load/Refresh Group Assignments
+						</button>
+					</div>
+					<div
+						id="instructor-view-content"
+						class="grid grid-cols-1 lg:grid-cols-2 gap-8"
+					>
+						<div>
+							<h2 class="text-xl font-semibold text-slate-700 mb-4">
+								Expert Groups
+							</h2>
+							<div id="expert-groups-container" class="space-y-4">
+								<p class="text-slate-500">
+									Click the button above to load group data.
+								</p>
+							</div>
+						</div>
+						<div>
+							<h2 class="text-xl font-semibold text-slate-700 mb-4">
+								Jigsaw Groups
+							</h2>
+							<div id="jigsaw-groups-container" class="space-y-4">
+								<p class="text-slate-500">
+									Click the button above to load group data.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const tabs = document.querySelectorAll(".tab-btn");
+				const tabContents = document.querySelectorAll(".tab-content");
+				let cachedGroupData = null; // To store fetched group data
+
+				// --- Tab Switching Logic ---
+				document.getElementById("tab-nav").addEventListener("click", (e) => {
+					if (e.target.matches(".tab-btn")) {
+						const targetId = e.target.dataset.target;
+						tabs.forEach((tab) => tab.classList.remove("active"));
+						e.target.classList.add("active");
+						tabContents.forEach((content) =>
+							content.classList.toggle("active", content.id === targetId)
+						);
+					}
+				});
+
+				// --- Shared Data and State ---
+				const MOCK_ACTIVITY_ID = 1;
+				const userSwitcher = document.getElementById("user-switcher");
+				const phaseSelector = document.getElementById("phase-selector");
+
+				// --- API Configuration ---
+				// The single source of truth for your backend URL
+				const BACKEND_URL = "https://your-digital-ocean-ip-or-domain.com";
+
+				// --- API Simulation ---
+				async function fetchGroupData() {
+					if (cachedGroupData) return cachedGroupData;
+					// Now we use the full, absolute URL
+					const response = await fetch(
+						`${BACKEND_URL}/api/activities/${MOCK_ACTIVITY_ID}/start`,
+						{ method: "POST" }
+					);
+					if (!response.ok)
+						throw new Error(`HTTP error! status: ${response.status}`);
+					cachedGroupData = await response.json();
+					return cachedGroupData;
+				}
+
+				async function fetchQuizData() {
+					// Simulating a fetch call for quiz data
+					console.log("Fetching quiz data...");
+					return new Promise((resolve) => {
+						setTimeout(() => {
+							resolve({
+								title: "Clustering Algorithms Quiz",
+								questions: [
+									{
+										id: 1,
+										text: "Which algorithm is sensitive to the initial placement of centroids?",
+										options: [
+											"K-Means",
+											"DBSCAN",
+											"Hierarchical",
+											"Agglomerative",
+										],
+									},
+									{
+										id: 2,
+										text: "Which algorithm is best suited for finding arbitrarily shaped clusters and identifying noise?",
+										options: ["K-Means", "DBSCAN", "Ward's Method", "PCA"],
+									},
+									{
+										id: 3,
+										text: "What does a Dendrogram represent?",
+										options: [
+											"Cluster density",
+											"A tree-like diagram of cluster hierarchy",
+											"The final cluster centroids",
+											"A measure of variance",
+										],
+									},
+								],
+							});
+						}, 500);
+					});
+				}
+
+				// --- User Switcher Population ---
+				async function populateUserSwitcher() {
+					try {
+						const data = await fetchGroupData();
+						const allStudents = Object.values(data.expert_groups).flat();
+						allStudents.sort((a, b) => a.name.localeCompare(b.name));
+						allStudents.forEach((student) => {
+							const option = new Option(
+								`${student.name} (ID: ${student.id})`,
+								student.id
+							);
+							userSwitcher.add(option);
+						});
+						userSwitcher.addEventListener("change", loadStudentView);
+						phaseSelector.addEventListener("change", loadStudentView);
+						loadStudentView(); // Initial load
+					} catch (error) {
+						console.error("Failed to populate user switcher", error);
+						document.getElementById(
+							"student-view-content"
+						).innerHTML = `<p class="text-red-500">Failed to load initial data. Is the backend server running? Error: ${error.message}</p>`;
+					}
+				}
+
+				// --- Task 4.3: Instructor Monitoring Logic ---
+				const loadGroupsBtn = document.getElementById("load-groups-btn");
+				const expertGroupsContainer = document.getElementById(
+					"expert-groups-container"
+				);
+				const jigsawGroupsContainer = document.getElementById(
+					"jigsaw-groups-container"
+				);
+
+				async function loadAndDisplayGroups() {
+					expertGroupsContainer.innerHTML =
+						'<p class="text-slate-500">Loading...</p>';
+					jigsawGroupsContainer.innerHTML =
+						'<p class="text-slate-500">Loading...</p>';
+
+					try {
+						const data = await fetchGroupData();
+						// Display Expert Groups
+						expertGroupsContainer.innerHTML = "";
+						Object.entries(data.expert_groups).forEach(([topic, students]) => {
+							const studentList = students
+								.map((s) => `<li>${s.name}</li>`)
+								.join("");
+							expertGroupsContainer.innerHTML += `<div class="card text-sm"><h3 class="font-semibold text-slate-800">${topic}</h3><ul class="list-disc list-inside text-slate-600 mt-2">${studentList}</ul></div>`;
+						});
+						// Display Jigsaw Groups
+						jigsawGroupsContainer.innerHTML = "";
+						Object.entries(data.jigsaw_groups).forEach(
+							([groupName, students]) => {
+								const studentList = students
+									.map(
+										(s) =>
+											`<li>${s.name} <span class="text-xs text-slate-400">(Expert in: ${s.expert_topic})</span></li>`
+									)
+									.join("");
+								jigsawGroupsContainer.innerHTML += `<div class="card text-sm"><h3 class="font-semibold text-slate-800">${groupName}</h3><ul class="list-disc list-inside text-slate-600 mt-2">${studentList}</ul></div>`;
+							}
+						);
+					} catch (error) {
+						const errorMsg = `<p class="text-red-500">Failed to load data. Is the backend server running? Error: ${error.message}</p>`;
+						expertGroupsContainer.innerHTML = errorMsg;
+						jigsawGroupsContainer.innerHTML = errorMsg;
+					}
+				}
+				loadGroupsBtn.addEventListener("click", loadAndDisplayGroups);
+
+				// --- Task 4.1: Student Activity View Logic ---
+				const studentViewContent = document.getElementById(
+					"student-view-content"
+				);
+				async function loadStudentView() {
+					const currentUserId = parseInt(userSwitcher.value, 10);
+					const currentPhase = document.querySelector(
+						'input[name="activity-phase"]:checked'
+					).value;
+					if (!cachedGroupData) {
+						studentViewContent.innerHTML = `<p class="text-slate-500">Loading group data...</p>`;
+						await populateUserSwitcher(); // This will call loadStudentView again after fetching
+						return;
+					}
+
+					let userGroupInfoHtml = `<p class="text-red-500">Could not find your group assignment for the selected phase.</p>`;
+
+					if (currentPhase === "expert") {
+						for (const [topic, students] of Object.entries(
+							cachedGroupData.expert_groups
+						)) {
+							const foundStudent = students.find((s) => s.id === currentUserId);
+							if (foundStudent) {
+								userGroupInfoHtml = `
+                                <div class="space-y-2">
+                                    <p class="text-sm text-slate-600">You are in the **Expert Group** phase. Your goal is to master the topic below and prepare to teach it to your peers.</p>
+                                    <p><span class="font-semibold">Your Topic:</span> <span class="px-2 py-1 bg-sky-100 text-sky-800 text-xs font-medium rounded-full">${topic}</span></p>
+                                    <p><span class="font-semibold">Your Teammates:</span> ${students
+																			.map((s) => s.name)
+																			.join(", ")}</p>
+                                </div>
+                            `;
+								break;
+							}
+						}
+					} else if (currentPhase === "jigsaw") {
+						for (const [groupName, students] of Object.entries(
+							cachedGroupData.jigsaw_groups
+						)) {
+							const foundStudent = students.find((s) => s.id === currentUserId);
+							if (foundStudent) {
+								const teamMatesHtml = students
+									.map(
+										(s) =>
+											`<li>${s.name} <span class="text-xs text-slate-400">(Expert in: ${s.expert_topic})</span></li>`
+									)
+									.join("");
+								userGroupInfoHtml = `
+                                 <div class="space-y-2">
+                                     <p class="text-sm text-slate-600">You are in the **Jigsaw Group** phase. Your goal is to teach your expert topic and learn from your peers.</p>
+                                     <p><span class="font-semibold">Your Group:</span> ${groupName}</p>
+                                     <p class="font-semibold">Your Teammates & Their Topics:</p>
+                                     <ul class="list-disc list-inside text-slate-700">${teamMatesHtml}</ul>
+                                 </div>
+                            `;
+								break;
+							}
+						}
+					}
+					studentViewContent.innerHTML = userGroupInfoHtml;
+				}
+
+				// --- Task 4.2: Student Quiz View Logic ---
+				const quizForm = document.getElementById("quiz-form");
+				const quizContainer = document.getElementById(
+					"quiz-questions-container"
+				);
+				const quizFeedback = document.getElementById("quiz-feedback");
+
+				async function displayQuiz() {
+					try {
+						const quizData = await fetchQuizData();
+						quizContainer.innerHTML = ""; // Clear loading message
+						quizData.questions.forEach((q, index) => {
+							const questionDiv = document.createElement("div");
+							questionDiv.className = "card";
+							const optionsHtml = q.options
+								.map(
+									(opt, i) => `
+                            <label class="flex items-center space-x-3 p-2 rounded-md hover:bg-slate-50">
+                                <input type="radio" name="question-${q.id}" value="${i}" class="h-4 w-4 text-sky-600 border-slate-300 focus:ring-sky-500" required>
+                                <span class="text-slate-700">${opt}</span>
+                            </label>`
+								)
+								.join("");
+							questionDiv.innerHTML = `<p class="font-semibold text-slate-800">${
+								index + 1
+							}. ${q.text}</p><div class="mt-2 space-y-1">${optionsHtml}</div>`;
+							quizContainer.appendChild(questionDiv);
+						});
+					} catch (error) {
+						quizContainer.innerHTML = `<p class="text-red-500">Failed to load quiz. Error: ${error.message}</p>`;
+					}
+				}
+				displayQuiz();
+
+				quizForm.addEventListener("submit", (e) => {
+					e.preventDefault();
+					const formData = new FormData(quizForm);
+					const submission = {
+						student_id: parseInt(userSwitcher.value, 10),
+						quiz_id: 1, // Mock quiz ID
+						answers: [],
+					};
+					for (const pair of formData.entries()) {
+						submission.answers.push({
+							question_id: parseInt(pair[0].split("-")[1], 10),
+							selected_option_index: parseInt(pair[1], 10),
+						});
+					}
+					quizFeedback.textContent = "Submitting...";
+					quizFeedback.className = "mt-4 text-center font-medium text-blue-600";
+					console.log(
+						"Quiz Submission Payload:",
+						JSON.stringify(submission, null, 2)
+					);
+					setTimeout(() => {
+						quizFeedback.textContent = "Quiz submitted successfully!";
+						quizFeedback.className =
+							"mt-4 text-center font-medium text-green-600";
+						quizForm.reset();
+					}, 1000);
+				});
+
+				// --- Initial Load ---
+				populateUserSwitcher();
+			});
+		</script>
+	</body>
+</html>
